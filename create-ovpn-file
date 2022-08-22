@@ -1,0 +1,41 @@
+#!/bin/sh
+
+. ovpn-vars.sh 
+
+if [ -z "$1" ] ;
+then 
+  echo "usage: ./create-ovpn-file username"
+  exit 1
+fi
+
+${EASYRSA_DIR}/easyrsa build-client-full $1 nopass
+
+(
+echo "client"
+echo "remote-cert-tls server"
+echo "verb 2"
+echo "dev tun0"
+echo "remote $OPENVPN_SERVER_NAME $OPENVPN_SERVER_PORT $OPENVPN_SERVER_PROTO"
+[ -z "$OPENVPN_SERVER_NAME2" ] || echo "remote $OPENVPN_SERVER_NAME2 $OPENVPN_SERVER_PORT2 $OPENVPN_SERVER_PROTO2"
+[ -z "$OPENVPN_SERVER_NAME3" ] || echo "remote $OPENVPN_SERVER_NAME3 $OPENVPN_SERVER_PORT3 $OPENVPN_SERVER_PROTO3"
+echo "<ca>"
+) > $1-$OPENVPN_SERVER_NAME.ovpn
+
+cat pki/ca.crt >> $1-$OPENVPN_SERVER_NAME.ovpn
+
+echo "</ca>"  >> $1-$OPENVPN_SERVER_NAME.ovpn
+echo "<cert>" >> $1-$OPENVPN_SERVER_NAME.ovpn
+
+cat pki/issued/$1.crt >> $1-$OPENVPN_SERVER_NAME.ovpn
+
+echo "</cert>"  >> $1-$OPENVPN_SERVER_NAME.ovpn
+echo "<key>"  >> $1-$OPENVPN_SERVER_NAME.ovpn
+
+cat pki/private/$1.key >> $1-$OPENVPN_SERVER_NAME.ovpn
+echo "</key>" >> $1-$OPENVPN_SERVER_NAME.ovpn
+
+echo "Wrote .ovpn file to $1-$OPENVPN_SERVER_NAME.ovpn"
+
+exit 0
+
+
