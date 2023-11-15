@@ -45,9 +45,11 @@ You've cloned this git repo.  You'll probably delete .git, rename it, git init, 
 
 Now cd into your renamed directory and get EasyRSA (we recommend a release, not just cloning master) and untar it like so:
 
-```wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.0/EasyRSA-3.1.0.tgz
-tar xvfpz EasyRSA-3.1.0.tgz
+```wget https://github.com/OpenVPN/easy-rsa/releases/download/v3.1.7/EasyRSA-3.1.7.tgz
+tar xvfpz EasyRSA-3.1.7.tgz
 ```
+
+Note this is a moment in time for the version.  Check for something newer.  But this version has been tested.
 
 At this point you want to edit ovpn-vars to make sure you have the
 right directory, hostname, etc set.
