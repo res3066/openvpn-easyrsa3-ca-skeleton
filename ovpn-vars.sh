@@ -1,6 +1,10 @@
 #!/bin/sh
 
-EASYRSA_DIR="EasyRSA-3.1.0"
+export EASYRSA_DIR="EasyRSA-3.1.7"
+
+export EASYRSA_ALGO="rsa"
+export EASYRSA_ALGO_PARAMS="4096"
+export EASYRSA_KEY_SIZE="4096"
 
 OPENVPN_SERVER_NAME="vpn2.seastrom.com"
 OPENVPN_SERVER_PORT="1194"
